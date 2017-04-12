@@ -23,3 +23,6 @@ This is test application made in Qt as example how to use OpenCV camera feed as 
 3. LIBS += -lGL **- LINUX OPENGL LIB**
 
 
+# Screenshot on Windows 
+
+![Windows](/images/Screenshot.jpg?raw=true "OpenGL OpenCV camera feed texture test")
