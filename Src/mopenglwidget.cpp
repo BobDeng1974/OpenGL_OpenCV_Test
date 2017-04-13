@@ -222,7 +222,7 @@ void MOpenGLWidget::update_texture(cv::Mat img)
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, img_bytes);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, img_bytes);
     glGenerateMipmap(GL_TEXTURE_2D);
 
     qDebug()<<"Texture created! Clearing image bytes...";
