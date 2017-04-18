@@ -208,24 +208,27 @@ void MOpenGLWidget::update_texture(cv::Mat img)
     std::memcpy(img_bytes,tx_img.data,img_size * sizeof(byte));
 
     //Create texture only first time
+
     if(create_texture)
     {
-        qDebug()<<"Creating texture...";
-
         glGenTextures(1, &frame_texture);
+        glBindTexture(GL_TEXTURE_2D,frame_texture);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, img_bytes);
+
         create_texture = false;
     }
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D,frame_texture);
+    else
+    {
+        glTexSubImage2D(GL_TEXTURE_2D,0,0,0,width,height,GL_BGR,GL_UNSIGNED_BYTE,img_bytes);
+    }
 
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
-    glTexSubImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, img_bytes);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    glActiveTexture(GL_TEXTURE0);
 
-    qDebug()<<"Texture created! Clearing image bytes...";
+    glGenerateMipmap(GL_TEXTURE_2D);
 
     free(img_bytes);
 
